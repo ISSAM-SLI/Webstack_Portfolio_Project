@@ -3,10 +3,9 @@ from flask_login import UserMixin
 
 # User model for storing user information
 class User(UserMixin, db.Model):
-    id = db.Column(db.Integer, primary_key=True)  # Unique ID for the user
-    username = db.Column(db.String(150), unique=True, nullable=False)  # Username
-    password = db.Column(db.String(150), nullable=False)  # Hashed password
-    email = db.Column(db.String(150), unique=True, nullable=False)  # User email
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(150), unique=True, nullable=False)
+    password = db.Column(db.String(150), nullable=False)
 
     # Relationship with QuizResult model
     quiz_results = db.relationship('QuizResult', backref='user', lazy=True)

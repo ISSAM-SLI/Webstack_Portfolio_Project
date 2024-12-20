@@ -1,7 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
-#from app.models import users_db
  
 
 app = Flask(__name__)
@@ -26,9 +25,8 @@ def load_user(user_id):
     #user = users_db.get(user_id)
     return User.query.get(int(user_id))
 
-#from . import routes, auth
-# Import routes for authentication and regular app functionality
-#app.register_blueprint(auth.bp)
+from . import routes, auth
+app.register_blueprint(auth.bp)
 # Create all the tables in the database
 with app.app_context():
     db.create_all()
