@@ -1,7 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
- 
 
 app = Flask(__name__)
 app.secret_key = 'd28ebc859848fe4f6b9154bffefdc230'
@@ -28,7 +27,5 @@ def load_user(user_id):
 from . import routes, auth
 app.register_blueprint(auth.bp)
 # Create all the tables in the database
-if __name__ == "__main__":
-    with app.app_context():
-        db.drop_all()
-        db.create_all()
+with app.app_context():
+    db.create_all()

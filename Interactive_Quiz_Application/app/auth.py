@@ -32,10 +32,11 @@ def register():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
+        email = request.form['email']
         hashed_password = generate_password_hash(password)
 
         # Create new user and add to the database
-        new_user = User(username=username, password=hashed_password)
+        new_user = User(username=username, password=hashed_password, email=email)
         db.session.add(new_user)
         db.session.commit()
         return redirect(url_for('auth.login'))
