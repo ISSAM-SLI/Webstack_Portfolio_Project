@@ -12,7 +12,7 @@ def dashboard():
     #print(f"Current User: {current_user.get_id()}")
     return f"Hello,! Welcome {current_user.username} to your quiz dashboard."
 
-@app.route("/", methods=["GET"])
+@app.route("/quiz", methods=["GET"])
 def get_quiz():
     """
     API Endpoint: Fetch and return quiz questions.
@@ -36,4 +36,4 @@ def get_quiz_question():
     """
     question = fetch_quiz_questions(amount=1)[0]  # Fetch one question
     time_limit = 30  # Time limit in seconds per question
-    return jsonify({"question": question, "time_limit": time_limit})
+    return jsonify({"question": question, "time_limit": time_limit}) 
