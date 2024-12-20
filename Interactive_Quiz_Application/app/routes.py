@@ -1,5 +1,5 @@
 from flask import render_template, jsonify, request
-from question import fetch_quiz_questions
+from .question import fetch_quiz_questions
 from flask_login import login_required, current_user
 from app  import app
 
