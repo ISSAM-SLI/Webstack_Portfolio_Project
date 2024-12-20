@@ -1,4 +1,4 @@
-from flask import requests
+import requests
 
 BASE_URL = "https://opentdb.com/api.php"
 
