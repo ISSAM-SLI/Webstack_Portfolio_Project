@@ -31,7 +31,7 @@ def login():
 
     return json (render_template('login.html'))
 
-@bp.route('/register', methods=['GET', 'POST'])
+@bp.route('/register', methods=['POST'])
 def register():
     if request.method == 'POST':
         username = request.form['username']
