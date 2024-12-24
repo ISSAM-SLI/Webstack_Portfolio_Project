@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, request
+from flask import Blueprint, render_template, redirect, url_for, request, json, flash
 from flask_login import login_user, login_required, logout_user, current_user
 from .models import User, users_db  # Assuming you've created a User model
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -27,21 +27,27 @@ def login():
                 print("Password does not match!")
         else:
             print(f"Invalid login attempt for {username}")
-            return 'Invalid credentials, please try again.'
+            return json('Invalid credentials, please try again.')
 
-    return render_template('login.html')
+    return json (render_template('login.html'))
 
-@bp.route('/register', methods=['GET', 'POST'])
+@bp.route('/register', methods=['POST'])
 def register():
     if request.method == 'POST':
         username = request.form['username']
+        email = request.form['email']
         password = request.form['password']
-        hashed_password = generate_password_hash(password)  # Hash the password
 
+        if username in users_db or any(user.email == email for user in users_db.values()):
+            flash('Username or email already exists. Please choose a different username or email.')
+            return redirect(url_for('auth.register'))
+
+        hashed_password = generate_password_hash(password)  # Hash the password
         # Create new user
-        new_user = User(id=username, username=username, password=hashed_password)
+        new_user = User(id=username, username=username, email=email, password=hashed_password)
         users_db[username] = new_user
-        print(users_db)
+
+        flash('User registered successfully!')
         return redirect(url_for('auth.login'))
 
     return render_template('register.html')

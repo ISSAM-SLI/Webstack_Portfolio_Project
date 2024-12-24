@@ -1,10 +1,12 @@
 from flask import Flask
 from flask_login import LoginManager
 from app.models import users_db
+from flask_cors import CORS
  
 
 app = Flask(__name__)
 app.secret_key = 'd28ebc859848fe4f6b9154bffefdc230'
+CORS(app)
 
 # Initialize Flask-Login
 login_manager = LoginManager()
