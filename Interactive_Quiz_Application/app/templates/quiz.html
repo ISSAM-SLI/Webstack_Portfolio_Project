@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interactive Quiz</title>
+    <script>
+        let timer; // Declare timer variable
+
+        function startTimer(duration) {
+            let countdown = duration;
+            const timerElement = document.getElementById('timer');
+
+            timer = setInterval(() => {
+                timerElement.textContent = countdown; // Update timer display
+                if (countdown <= 0) {
+                    clearInterval(timer); // Stop the timer
+                    document.getElementById('quiz-form').submit(); // Submit the form automatically
+                }
+                countdown--;
+            }, 1000);
+        }
+
+        // Start the timer when the page loads
+        window.onload = () => {
+            startTimer(30); // 30 seconds timer
+        };
+    </script>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Quiz Time!</h1>
+
+        <p>Question {{ question_index }} of {{ total_questions }}</p>
+        <p>Time remaining: <span id="timer">30</span> seconds</p>
+
+        <form method="POST" action="{% if question_index == total_questions %}{{ url_for('submit_quiz') }}{% else %}{{ url_for('quiz') }}{% endif %}" id="quiz-form">
+            <div class="question">
+                <p>{{ question.question }}</p>
+                <ul>
+                    {% for option in answers %}
+                        <li>
+                            <input type="radio" name="answer" value="{{ option }}" required>
+                            {{ option }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            {% if question_index == total_questions %}
+                <button type="submit">Submit Quiz</button>
+            {% else %}
+                <button type="submit">Next Question</button>
+            {% endif %}
+        </form>
+    </div>
+</body>
+</html>
