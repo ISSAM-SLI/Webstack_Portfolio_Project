@@ -9,49 +9,43 @@ bp = Blueprint('auth', __name__, url_prefix='/auth')
 
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
-    """Handle user login.
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        user = User.query.filter_by(username=username).first()
 
-    If the request method is POST, it checks the username and password against the database.
-    If the credentials are valid, the user is logged in.
-    """
-    if request.method == 'POST':  # If form was submitted
-        username = request.form['username']  # Retrieving the username
-        password = request.form['password']  # Retrieving the password
-
-        user = User.query.filter_by(username=username).first()  # Querying for the user by username
-        if user:  # If user exists
-            print("User found!")
-            if check_password_hash(user.password, password):  # Verifying the password
-                print("Password matches!")
-                login_user(user)  # Log the user in
-                return redirect(url_for('quiz'))  # Redirect to the quiz page
+        if user:
+            if check_password_hash(user.password, password):
+                login_user(user)
+                return redirect(url_for('quiz'))
             else:
-                print("Password does not match!")  # If password is incorrect
+                # Password is incorrect
+                return render_template('login.html', error="Incorrect password. Please try again.")
         else:
-            return 'Invalid credentials, please try again.'  # If username is not found
+            # Username does not exist
+            return render_template('login.html', error="Username not found. Please register first.")
 
-    return render_template('login.html')  # Rendering the login page if GET request
-
+    return render_template('login.html')
 @bp.route('/register', methods=['GET', 'POST'])
 def register():
-    """Handle user registration.
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        email = request.form['email']
 
-    If the request method is POST, it creates a new user in the database with the provided username, password, and email.
-    The password is hashed before storing.
-    """
-    if request.method == 'POST':  # If form was submitted
-        username = request.form['username']  # Retrieving the username
-        password = request.form['password']  # Retrieving the password
-        email = request.form['email']  # Retrieving the email
-        hashed_password = generate_password_hash(password)  # Hashing the password
+        # Check if username or email already exists
+        if User.query.filter_by(username=username).first():
+            return render_template('register.html', error="Username already exists. Please choose a different one.")
+        if User.query.filter_by(email=email).first():
+            return render_template('register.html', error="Email already registered. Please use a different email.")
 
-        new_user = User(username=username, password=hashed_password, email=email)  # Creating new user instance
-        db.session.add(new_user)  # Adding the new user to the database
-        db.session.commit()  # Committing the session to save the user
-        return redirect(url_for('auth.login'))  # Redirect to login page after registration
+        hashed_password = generate_password_hash(password)
+        new_user = User(username=username, password=hashed_password, email=email)
+        db.session.add(new_user)
+        db.session.commit()
+        return redirect(url_for('auth.login'))
 
-    return render_template('register.html')  # Rendering the registration page if GET request
-
+    return render_template('register.html')
 @bp.route('/logout')
 @login_required
 def logout():

@@ -3,10 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <title>Quiz Result</title>
+    <style>
+        .correct { color: green; }
+        .incorrect { color: red; }
+        .correct-answer {
+            color: black;
+            font-weight: bold;
+        }
+        .progress-bar {
+            border: 1px solid #ddd;
+            width: 100%;
+            margin: 20px 0;
+        }
+        .progress-bar-inner {
+            background-color: green;
+            color: white;
+            text-align: center;
+            height: 20px;
+        }
+    </style>
 </head>
 <body>
     <h1>Quiz Completed</h1>
-    <p>Your Score: {{ score }}/5</p>
+    <p>Your Score: {{ score }}/{{ total_questions }}</p>
+
+    <h2>
+        {% if score == total_questions %}
+            🎉 Perfect Score! You're a quiz master! 🎉
+        {% elif score > total_questions / 2 %}
+            😊 Great Job! Keep it up! 😊
+        {% else %}
+            😞 Better Luck Next Time! 😞
+        {% endif %}
+    </h2>
+
+    <div class="progress-bar">
+        <div class="progress-bar-inner" style="width: {{ (score / total_questions) * 100 }}%;">
+            {{ (score / total_questions) * 100 }}%
+        </div>
+    </div>
+
+    <h3>Feedback:</h3>
+    <ul>
+        {% for item in feedback %}
+            <li>
+                <strong>Question:</strong> {{ item.question }}<br>
+                <strong>Your Answer:</strong> {{ item.selected_answer }}<br>
+                <strong>Feedback:</strong> 
+                {% if item.feedback.startswith("Correct!") %}
+                    <span class="correct">✅ {{ item.feedback }}</span>
+                {% else %}
+                    <span class="incorrect">❌ Incorrect. The correct answer is: </span>
+                    <span class="correct-answer">{{ item.feedback.split(': ')[-1] }}</span>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
     <a href="/quiz">Retake Quiz</a>
 </body>
 </html>

@@ -14,7 +14,7 @@ def home():
 @login_required
 def quiz():
     """
-    Route to display one question at a time.
+    Route to display one question at a time and provide feedback.
     """
     # Initialize session data if not already present
     if 'questions' not in session:
@@ -22,6 +22,7 @@ def quiz():
         session['questions'] = fetch_questions(amount=amount_of_questions)
         session['question_index'] = 0
         session['score'] = 0  # Initialize score
+        session['feedback'] = []  # Initialize feedback list
 
     # Get the stored questions and current question index
     questions = session['questions']
@@ -42,20 +43,28 @@ def quiz():
         selected_answer = request.form.get('answer')  # Get the answer chosen by the user
         correct_answer = question['correct_answer']
         
-        # Check if the answer is correct
+        # Check if the answer is correct and prepare feedback
         if selected_answer == correct_answer:
             session['score'] += 1
+            feedback = "Correct!"
+        else:
+            feedback = f"Incorrect. The correct answer is: {correct_answer}"
         
+        # Store feedback for each question
+        session['feedback'].append({
+            'question': question['question'],
+            'selected_answer': selected_answer,
+            'feedback': feedback
+        })
         # Move to the next question
         session['question_index'] += 1
         return redirect(url_for('quiz'))  # Redirect to show the next question
-    print("Question being sent to template:", question)
 
     return render_template(
         'quiz.html',
         question=question,
         answers=answers,
-        question_index=question_index + 1,
+        index_question=question_index + 1,
         total_questions=len(questions)
     )
 @app.route('/submit_quiz', methods=['POST'])
@@ -64,10 +73,7 @@ def submit_quiz():
     """
     Route to handle quiz submissions and calculate score.
     """
-    print(f"Reached submit_quiz route with score: {session.get('score', 0)} for user: {current_user.id}")
     score = session['score']
-    print("Saving result:", score, "for user:", current_user.id)
-
     # Save the score to the database
     new_result = QuizResult(score=score, user_id=current_user.id, date_taken=datetime.utcnow())
     db.session.add(new_result)
@@ -78,12 +84,10 @@ def submit_quiz():
 @app.route('/result')
 @login_required
 def result():
-    """
-    Route to display quiz results after all questions are answered.
-    """
-    score = session.get('score', 0)  # Get the user's score from the session
-    total_questions = 5  # Total number of questions
+    score = session.get('score', 0)
+    total_questions = 5
+    feedback = session.get('feedback', [])
     session.clear()
+
     
-    # Show the result page with the user's score
-    return render_template('result.html', score=score, total_questions=total_questions)
+    return render_template('result.html', score=score, total_questions=total_questions, feedback=feedback)
