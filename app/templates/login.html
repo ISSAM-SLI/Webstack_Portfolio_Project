@@ -4,22 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="/app/static/login.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}"">
 </head>
 <body>
+    <header>
+    <a href="{{ url_for('home') }}" class="back-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="24" viewBox="0 0 12 24"><path fill="#000" fill-rule="evenodd" d="m3.343 12l7.071 7.071L9 20.485l-7.778-7.778a1 1 0 0 1 0-1.414L9 3.515l1.414 1.414z" /></svg>
+    </a>
     <div class="logo"></div>
-    <h1>Welcome back - Login to Quizify </h1>
+    </header>
+    <h1>Welcome back!</h1>
     {% if error %}
         <p style="color: red;">{{ error }}</p>
     {% endif %}
     <form method="POST">
         <div>
-            <label for="username">Username</label>
             <input type="text" id="username" name="username" placeholder="Username" required>
         </div>
-        <div>
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" placeholder="Password" required>
+        <div style="position: relative;">
+            <input type="password" id="password" name="password" placeholder="Password" required id="password"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="open-pass"><path fill="#000" d="M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5a5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5" ></svg>
         </div>
 
         <button type="submit">Login</button>
