@@ -8,57 +8,76 @@ from app.models import QuizResult
 
 @app.route('/')
 def home():
-        return render_template('index.html')
+        """
+    Home route.
+
+    **Methods:** GET
+
+    **Endpoint:** /
+
+    **Responses:**
+    - Display a welcome message for the Quiz App.
+    """
+        return 'Welcome to the Quiz App!'
 
 @app.route('/quiz', methods=['GET', 'POST'])
 @login_required
 def quiz():
+    print("Quiz route called")
     """
-    Route to display one question at a time and provide feedback.
+    Quiz route: Displays one question at a time and processes user answers.
+
+    **Methods:** GET, POST
+
+    **Endpoint:** /quiz
+
+    **Session Variables:**
+    - `questions`: List of questions fetched for the quiz.
+    - `question_index`: Current index of the question being displayed.
+    - `score`: Current score of the user.
+    - `feedback`: List of feedback for each answered question.
+
+    **Responses:**
+    - GET: Renders the next question with answer choices.
+    - POST: Processes the user's answer and updates session data.
+      - Redirects to the next question if available.
+      - Redirects to the results page if all questions are completed.
     """
-    # Initialize session data if not already present
     if 'questions' not in session:
-        amount_of_questions = 5  # Set number of questions dynamically here
+        amount_of_questions = 5
         session['questions'] = fetch_questions(amount=amount_of_questions)
         session['question_index'] = 0
-        session['score'] = 0  # Initialize score
-        session['feedback'] = []  # Initialize feedback list
+        session['score'] = 0
+        session['feedback'] = []
 
-    # Get the stored questions and current question index
     questions = session['questions']
     question_index = session['question_index']
 
-    # Ensure the index is within range of the number of questions
     if question_index >= len(questions):
-        return redirect(url_for('result'))  # Redirect to results page when questions end
+        return redirect(url_for('result'))
 
     question = questions[question_index]
     
-    # Shuffle the answers for each question
     answers = question['incorrect_answers'] + [question['correct_answer']]
     random.shuffle(answers)
 
-    # Handle form submission (user answering the question)
     if request.method == 'POST':
-        selected_answer = request.form.get('answer')  # Get the answer chosen by the user
+        selected_answer = request.form.get('answer')
         correct_answer = question['correct_answer']
         
-        # Check if the answer is correct and prepare feedback
         if selected_answer == correct_answer:
             session['score'] += 1
             feedback = "Correct!"
         else:
             feedback = f"Incorrect. The correct answer is: {correct_answer}"
         
-        # Store feedback for each question
         session['feedback'].append({
             'question': question['question'],
             'selected_answer': selected_answer,
             'feedback': feedback
         })
-        # Move to the next question
         session['question_index'] += 1
-        return redirect(url_for('quiz')) 
+        return redirect(url_for('quiz'))
 
     return render_template(
         'quiz.html',
@@ -70,12 +89,20 @@ def quiz():
 @app.route('/submit_quiz', methods=['POST'])
 @login_required
 def submit_quiz():
+    print("Submit Quiz route called")
     """
-    Route to handle quiz submissions and calculate score.
+    Submit quiz route: Handles quiz submission and saves the score.
+
+    **Methods:** POST
+
+    **Endpoint:** /submit_quiz
+
+    **Responses:**
+    - Saves the score and redirects to the results page.
     """
     score = session['score']
-    # Save the score to the database
     new_result = QuizResult(score=score, user_id=current_user.id, date_taken=datetime.utcnow())
+    print(f"Saved QuizResult: {new_result}")
     db.session.add(new_result)
     db.session.commit()
 
@@ -84,10 +111,23 @@ def submit_quiz():
 @app.route('/result')
 @login_required
 def result():
+    """
+    Result route: Displays the quiz results and feedback.
+
+    **Methods:** GET
+
+    **Endpoint:** /result
+
+    **Responses:**
+    - Renders the result page with:
+      - Final score
+      - Total questions
+      - Feedback on each answered question.
+    """
     score = session.get('score', 0)
     total_questions = 5
     feedback = session.get('feedback', [])
     session.clear()
-
     
     return render_template('result.html', score=score, total_questions=total_questions, feedback=feedback)
+

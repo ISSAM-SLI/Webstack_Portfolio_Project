@@ -9,6 +9,23 @@ bp = Blueprint('auth', __name__, url_prefix='/auth')
 
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
+    """
+    Function used to Login a user.
+
+    **Methods:** GET, POST
+
+    **Endpoint:** /auth/login
+
+    **Request Parameters:**
+    - `username` (form data): The username of the user attempting to log in.
+    - `password` (form data): The password of the user.
+
+    **Responses:**
+    - GET: Render the login page.
+    - POST:
+        - Redirect to the quiz page if login is successful.
+        - Render the login page with an error message if credentials are invalid.
+    """
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -19,15 +36,32 @@ def login():
                 login_user(user)
                 return redirect(url_for('quiz'))
             else:
-                # Password is incorrect
                 return render_template('login.html', error="Incorrect password. Please try again.")
         else:
-            # Username does not exist
             return render_template('login.html', error="Username not found. Please register first.")
 
     return render_template('login.html')
+
 @bp.route('/register', methods=['GET', 'POST'])
 def register():
+    """
+    Register a new user.
+
+    **Methods:** GET, POST
+
+    **Endpoint:** /auth/register
+
+    **Request Parameters:**
+    - `username` (form data): The desired username.
+    - `password` (form data): The desired password.
+    - `email` (form data): The user's email address.
+
+    **Responses:**
+    - GET: Render the registration page.
+    - POST:
+        - Redirect to the login page upon successful registration.
+        - Render the registration page with an error if the username or email is already taken.
+    """
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -46,12 +80,19 @@ def register():
         return redirect(url_for('auth.login'))
 
     return render_template('register.html')
+
 @bp.route('/logout')
 @login_required
 def logout():
-    """Log the user out.
+    """
+    Log out the current user.
 
-    This route logs out the current logged-in user and redirects to the login page.
+    **Methods:** GET
+
+    **Endpoint:** /auth/logout
+
+    **Responses:**
+    - Redirect to the login page after successfully logging out.
     """
     logout_user()  # Logging out the current user
     return redirect(url_for('auth.login'))  # Redirecting to login page after logout
