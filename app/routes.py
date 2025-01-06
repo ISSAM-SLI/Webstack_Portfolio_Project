@@ -18,7 +18,7 @@ def home():
     **Responses:**
     - Display a welcome message for the Quiz App.
     """
-        return 'Welcome to the Quiz App!'
+        return render_template('index.html')
 
 @app.route('/quiz', methods=['GET', 'POST'])
 @login_required
