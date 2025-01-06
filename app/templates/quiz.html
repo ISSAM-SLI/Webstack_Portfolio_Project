@@ -29,11 +29,10 @@
 <body>
     <div class="quiz-container">
         <h1>Quiz Time!</h1>
-
         <p>Question {{ index_question }} of {{ total_questions }}</p>
         <p>Time remaining: <span id="timer">30</span> seconds</p>
 
-        <form method="POST" action="{% if index_question == total_questions %}{{ url_for('submit_quiz') }}{% else %}{{ url_for('quiz') }}{% endif %}" id="quiz-form">
+        <form method="POST" action="{% if question_index == total_questions %}{{ url_for('submit_quiz') }}{% else %}{{ url_for('quiz') }}{% endif %}" id="quiz-form">
             <div class="question">
                 <p>{{ question.question }}</p>
                 <ul>

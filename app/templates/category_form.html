@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz Settings</title>
+</head>
+<body>
+    <h1>Select Quiz Settings</h1>
+    <form method="POST" action="{{ url_for('quiz') }}">
+        <label for="amount">Number of Questions:</label>
+        <input type="number" id="amount" name="amount" placeholder="5" min="1" max="50" required>
+        <br><br>
+
+        <label for="category">Category:</label>
+        <select id="category" name="category" required>
+            <option value="">Any</option>
+            <option value="9">General Knowledge</option>
+            <option value="18">Computers</option>
+            <option value="19">Mathematics</option>
+            <option value="21">Sports</option>
+            <option value="23">History</option>
+            <option value="25">Art</option>
+            <option value="27">Science & Nature</option>
+        </select>
+        <br><br>
+
+        <label for="difficulty">Difficulty:</label>
+        <select id="difficulty" name="difficulty" required>
+            <option value="">Any</option>
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+        </select>
+        <br><br>
+
+        <button type="submit">Start Quiz</button>
+    </form>
+</body>
+</html>
