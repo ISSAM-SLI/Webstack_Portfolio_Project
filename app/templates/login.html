@@ -4,22 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="stylesheet" href="/app/static/login.css">
 </head>
 <body>
-    <h1>Login to the Quiz App</h1>
+    <div class="logo"></div>
+    <h1>Welcome back - Login to Quizify </h1>
     {% if error %}
         <p style="color: red;">{{ error }}</p>
     {% endif %}
     <form method="POST">
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username" required>
-
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" required>
+        <div>
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="Username" required>
+        </div>
+        <div>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Password" required>
+        </div>
 
         <button type="submit">Login</button>
     </form>
-    <p>Don't have an account? <a href="{{ url_for('auth.register') }}">Register here</a></p>
+    <p>Don't have an account? <a href="{{ url_for('auth.register') }}">Sign up here</a></p>
 </body>
 </html>
-

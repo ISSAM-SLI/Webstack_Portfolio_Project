@@ -8,7 +8,7 @@ from app.models import QuizResult
 
 @app.route('/')
 def home():
-        return 'Welcome to the Quiz App!'
+        return render_template('index.html')
 
 @app.route('/quiz', methods=['GET', 'POST'])
 @login_required
@@ -58,7 +58,7 @@ def quiz():
         })
         # Move to the next question
         session['question_index'] += 1
-        return redirect(url_for('quiz'))  # Redirect to show the next question
+        return redirect(url_for('quiz')) 
 
     return render_template(
         'quiz.html',

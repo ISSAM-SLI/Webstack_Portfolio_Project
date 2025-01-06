@@ -1,0 +1,22 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+body {
+    background-color: #F4F3F6;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+form>div {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+
+}
+form button {
+    width: 80%;
+}
