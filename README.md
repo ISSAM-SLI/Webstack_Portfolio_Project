@@ -128,5 +128,3 @@ We hope it brings some fun and learning into your day. Happy quizzing! 🧠
 - **Usage**: Describes how users can interact with the app.
 - **Future Enhancements**: Mentions potential areas for improving the app.
 - **License & Contribution**: Encourages open-source contributions and provides licensing information.
-
-This README gives users a clear understanding of what the app does, how to use it, and how they can contribute or extend it. It also serves as a guide for anyone who wants to deploy or develop further on the project.
