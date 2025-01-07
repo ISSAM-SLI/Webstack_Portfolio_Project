@@ -1,4 +1,3 @@
-```markdown
 # Interactive Quiz Application
 
 Welcome to the Interactive Quiz Application! 🎉 This app is designed to provide users with a fun and engaging quiz experience while learning new facts. Whether you're quizzing yourself or challenging your friends, this app has everything you need to test your knowledge.
