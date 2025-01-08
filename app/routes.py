@@ -51,7 +51,7 @@ def quiz():
             return redirect(url_for('quiz'))  # Redirect to the quiz questions
 
         # Render category selection form
-        return render_template('category_form.html')
+        return render_template('quiz_settings.html')
 
     # Quiz question rendering step
     questions = session['questions']
