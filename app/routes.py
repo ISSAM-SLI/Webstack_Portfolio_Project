@@ -59,7 +59,7 @@ def quiz():
 
     # Ensure the index is within range of the number of questions
     if question_index >= len(questions):
-        return redirect(url_for('result'))  # Redirect to results page when questions end
+        return redirect(url_for('submit_quiz'))  # Redirect to results page when questions end
 
     question = questions[question_index]
 
@@ -138,9 +138,10 @@ def result():
       - Feedback on each answered question.
     """
     score = session.get('score', 0)
-    total_questions = 5
+    total_questions = session.get('total_questions', 0)
     feedback = session.get('feedback', [])
     session.clear()
+    session['_user_id'] = current_user.id
     
     return render_template('result.html', score=score, total_questions=total_questions, feedback=feedback)
 

@@ -59,7 +59,12 @@
             </li>
         {% endfor %}
     </ul>
-    <a href="/quiz">Retake Quiz</a>
+    <div class="button-container">
+        <!-- Add the Retake Quiz button -->
+        <a href="{{ url_for('quiz') }}" class="btn btn-primary">Retake Quiz</a>
+        <!-- Add the Logout button -->
+        <a href="{{ url_for('auth.logout') }}" class="btn btn-danger">Logout</a>
+    </div>
 </body>
 </html>
 
