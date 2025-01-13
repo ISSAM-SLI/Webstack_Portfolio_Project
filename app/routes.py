@@ -5,6 +5,15 @@ from flask_login import login_required, current_user
 from flask import request, redirect, url_for, session, render_template
 from datetime import datetime
 from app.models import QuizResult
+CATEGORY_MAP = {
+    'General Knowledge': '9',
+    'Computer': '18',
+    'Mathematics': '19' ,
+    'Sports': '21' ,
+    'History': '23',
+    'Art': '25',
+    'Science & Nature': '17',
+}
 
 @app.route('/')
 def home():
@@ -26,22 +35,23 @@ def quiz():
     """
     Route to display category selection first and then proceed to the quiz.
     """
-    if 'questions' not in session:  # Category selection step
+    if 'questions' not in session or session['questions'] is None:  # Category selection step
         if request.method == 'POST':
             # Fetch user preferences from the form
-            amount_of_questions = int(request.form.get('amount'))  # Default to 5 questions
-            category = request.form.get('category')  # Get selected category
+            amount_of_questions = int(request.form.get('amount')) # Default to 5 questions
+            category_name = request.form.get('category')  # Get selected category
+            category_id = CATEGORY_MAP.get(category_name)
             difficulty = request.form.get('difficulty')  # Get selected difficulty
 
             # Store user preferences in the session
             session['amount'] = amount_of_questions
-            session['category'] = category
+            session['category'] = category_name
             session['difficulty'] = difficulty
 
             # Fetch questions based on user preferences
             session['questions'] = fetch_questions(
                 amount=amount_of_questions,
-                category=category,
+                category=category_id,
                 difficulty=difficulty
             )
             session['question_index'] = 0
