@@ -1,0 +1,101 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+body, html {
+    height: 100%;
+    font-family: 'Poppins', sans-serif;
+    background-color: #1A1F71;
+    color: #F4F3F6;
+    padding: 30px 20px 0;
+    font-size: 18px;
+}
+.logo {
+    background-image: url('/static/assets/auth-logo-white.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 112px;
+    height: 46px;
+}
+h1 {
+    margin-top: 100px;
+    font-size: 1.8rem;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 30px; 
+    gap: 20px;
+}
+input[type='number'] {
+    width: 100%;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+form input {
+    text-align: right;
+}
+.input-wrapper {
+    position: relative;
+}
+.input-text {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 10px;
+    font-size: 1rem;
+    color: #F4F3F6;
+}
+form input::placeholder{
+    text-align: right;
+}
+form input, select {
+    background-color: transparent;
+    height: 50px;
+    color: #F4F3F6;
+    font-size: 1rem;
+    border: 1px solid #F4F3F6;
+    border-radius: 7px;
+    padding: 5px 20px;
+    cursor: pointer;
+}
+form option {
+    color: #000;
+    font-size: 0.8rem;
+}
+form > button {
+    background-color: #682794;
+    padding: 15px 40px;
+    border: none;
+    margin-top: 30px;
+    cursor: pointer;
+    color:#F4F3F6;
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+.q-op {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+.q-op > button {
+    margin-top: 15px;
+    background-color: transparent;
+    border: 1px solid #F4F3F6;
+    border-radius: 5px;
+    height: 32px;
+    cursor: pointer;
+    color: #F4F3F6;
+    font-weight: 500;
+    font-size: 0.8rem;
+    width: 100px;
+}

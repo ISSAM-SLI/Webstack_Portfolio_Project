@@ -29,21 +29,21 @@
 </head>
 <body>
     <div class="quiz-container">
-        <h1>Quiz Time!</h1>
+        <h1>{{ session.category }} Quiz !</h1>
         <p>Question {{ index_question }} of {{ total_questions }}</p>
         <p>Time remaining: <span id="timer">30</span> seconds</p>
 
-        <form method="POST" action="{% if question_index == total_questions %}{{ url_for('submit_quiz') }}{% else %}{{ url_for('quiz') }}{% endif %}" id="quiz-form">
+        <form method="POST" action="{% if index_question == total_questions %}{{ url_for('submit_quiz') }}{% else %}{{ url_for('quiz') }}{% endif %}" id="quiz-form">
             <div class="question">
                 <p>{{ question.question }}</p>
-                <ul>
+                <div class="answer-container">
                     {% for option in answers %}
-                        <li>
+                        <div class="answer">
                             <input type="radio" name="answer" value="{{ option }}" required>
                             {{ option }}
-                        </li>
+                        </div>
                     {% endfor %}
-                </ul>
+                </div>
             </div>
 
             {% if index_question == total_questions %}
