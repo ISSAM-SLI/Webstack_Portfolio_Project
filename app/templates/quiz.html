@@ -30,7 +30,7 @@
 <body>
     <div class="quiz-container">
         <h1>{{ session.category }} Quiz !</h1>
-        <p>Question {{ index_question }} of {{ total_questions }}</p>
+        <p>Question {{ index_question + 1 }} of {{ total_questions }}</p>
         <p>Time remaining: <span id="timer">30</span> seconds</p>
 
         <form method="POST" action="{% if index_question == total_questions %}{{ url_for('submit_quiz') }}{% else %}{{ url_for('quiz') }}{% endif %}" id="quiz-form">
