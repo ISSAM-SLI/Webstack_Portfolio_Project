@@ -34,8 +34,9 @@ def home():
 def quiz():
     """
     Route to display category selection first and then proceed to the quiz.
-    """
-    if 'questions' not in session or session['questions'] is None:  # Category selection step
+    """ 
+    # Category selection step
+    if 'questions' not in session or session['questions'] is None: 
         if request.method == 'POST':
             # Fetch user preferences from the form
             amount_of_questions = int(request.form.get('amount')) # Default to 5 questions
@@ -63,23 +64,25 @@ def quiz():
         # Render category selection form
         return render_template('quiz_settings.html')
 
-    # Quiz question rendering step
     questions = session['questions']
     question_index = session['question_index']
+    answers = []
 
-    # Ensure the index is within range of the number of questions
-    if question_index >= len(questions):
-        return redirect(url_for('submit_quiz'))  # Redirect to results page when questions end
-
-    question = questions[question_index]
-
-    # Shuffle the answers for each question
-    answers = question['incorrect_answers'] + [question['correct_answer']]
-    random.shuffle(answers)
-
+    # Quiz question rendering step
+    if request.method == 'GET':
+        if question_index >= len(questions):
+            return redirect(url_for('submit_quiz'))
+        question = questions[question_index]
+        answers = question['incorrect_answers'] + [question['correct_answer']]
+        random.shuffle(answers)
     # Handle form submission (user answering the question)
-    if request.method == 'POST':
-        selected_answer = request.form.get('answer')  # Get the answer chosen by the user
+    elif request.method == 'POST':
+        question_index = session['question_index'] 
+        question = questions[question_index]
+        # Shuffle the answers for each question
+        answers = question['incorrect_answers'] + [question['correct_answer']]
+        random.shuffle(answers)
+        selected_answer = request.form.get('answer')
         correct_answer = question['correct_answer']
 
         # Check if the answer is correct and prepare feedback
@@ -95,24 +98,23 @@ def quiz():
             'selected_answer': selected_answer,
             'feedback': feedback
         })
-        # Move to the next question
-        session['question_index'] += 1
+        session['question_index'] += 1 # Move to the next question
         return redirect(url_for('quiz'))  # Redirect to show the next question
 
     return render_template(
         'quiz.html',
         question=question,
         answers=answers,
-        index_question=question_index + 1,
-        total_questions=len(questions),
+        index_question=session['question_index'],
+        total_questions=len(session['questions']),
         amount=session.get('amount', 5),
         category=session.get('category', ''),
         difficulty=session.get('difficulty', '')
     )
-@app.route('/submit_quiz', methods=['POST'])
+
+@app.route('/submit_quiz', methods=['GET', 'POST'])
 @login_required
 def submit_quiz():
-    print("Submit Quiz route called")
     """
     Submit quiz route: Handles quiz submission and saves the score.
 
@@ -125,7 +127,6 @@ def submit_quiz():
     """
     score = session['score']
     new_result = QuizResult(score=score, user_id=current_user.id, date_taken=datetime.utcnow())
-    print(f"Saved QuizResult: {new_result}")
     db.session.add(new_result)
     db.session.commit()
 
@@ -143,15 +144,14 @@ def result():
 
     **Responses:**
     - Renders the result page with:
-      - Final score
-      - Total questions
-      - Feedback on each answered question.
+        - Final score
+        - Total questions
+        - Feedback on each answered question.
     """
     score = session.get('score', 0)
-    total_questions = session.get('total_questions', 0)
+    total_questions = len(session['questions'])
     feedback = session.get('feedback', [])
     session.clear()
     session['_user_id'] = current_user.id
-    
-    return render_template('result.html', score=score, total_questions=total_questions, feedback=feedback)
 
+    return render_template('result.html', score=score, total_questions=total_questions, feedback=feedback)
