@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="{{ url_for('static', filename='error404.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="error-container">
+        <div>
+            <h1>404 Error</h1>
+            <p>Sorry, the page you're looking for does not exist.</p>
+            <p><a href="{{ url_for('home') }}">Back to homepage</a></p>
+        </div>
+    </div>
+</body>
+</html>

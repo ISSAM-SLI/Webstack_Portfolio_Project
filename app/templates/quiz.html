@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Quiz</title>
+    <link rel="icon" href="data:,">
     <link rel="stylesheet" href="{{ url_for('static', filename='quiz.css')}}">
     <script>
         let timer; // Declare timer variable
@@ -30,20 +31,22 @@
 <body>
     <div class="quiz-container">
         <h1>{{ session.category }} Quiz !</h1>
-        <p>Question {{ index_question + 1 }} of {{ total_questions }}</p>
-        <p>Time remaining: <span id="timer">30</span> seconds</p>
+        <h2>Question {{ index_question + 1 }} of {{ total_questions }}</h2>
+        <h2>Time remaining: <span id="timer">30</span> seconds</h2>
 
-        <form method="POST" action="{% if index_question == total_questions %}{{ url_for('submit_quiz') }}{% else %}{{ url_for('quiz') }}{% endif %}" id="quiz-form">
+        <form method="POST" action="{{ url_for('quiz') }}" id="quiz-form">
             <div class="question">
                 <p>{{ question.question }}</p>
-                <div class="answer-container">
+                <ul>
                     {% for option in answers %}
-                        <div class="answer">
-                            <input type="radio" name="answer" value="{{ option }}" required>
-                            {{ option }}
-                        </div>
+                        <li>
+                            <label>
+                                <input type="radio" name="answer" value="{{ option }}" required>
+                                {{ option }}
+                            </label>
+                        </li>
                     {% endfor %}
-                </div>
+                </ul>
             </div>
 
             {% if index_question == total_questions %}

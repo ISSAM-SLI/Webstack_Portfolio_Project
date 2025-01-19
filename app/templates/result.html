@@ -3,42 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>Quiz Result</title>
-    <style>
-        .correct { color: green; }
-        .incorrect { color: red; }
-        .correct-answer {
-            color: black;
-            font-weight: bold;
-        }
-        .progress-bar {
-            border: 1px solid #ddd;
-            width: 100%;
-            margin: 20px 0;
-        }
-        .progress-bar-inner {
-            background-color: green;
-            color: white;
-            text-align: center;
-            height: 20px;
-        }
-    </style>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="{{ url_for('static', filename='result.css') }}">
 </head>
 <body>
-    <h1>Quiz Completed</h1>
-    <p>Your Score: {{ score }}/{{ total_questions }}</p>
-
-    <h2>
-        {% if score == total_questions %}
-            🎉 Perfect Score! You're a quiz master! 🎉
-        {% elif score > total_questions / 2 %}
-            😊 Great Job! Keep it up! 😊
-        {% else %}
-            😞 Better Luck Next Time! 😞
-        {% endif %}
-    </h2>
+    <div class="result-summary">
+        <h1>Quiz Completed</h1>
+        <h2>Score: {{ score }}/{{ total_questions }}</h2>
+        <h2>
+            {% if score == total_questions %}
+                🎉 Perfect Score! You're a quiz master! 🎉
+            {% elif score > total_questions / 2 %}
+                😊 Great Job! Keep it up! 😊
+            {% else %}
+                😞 Better Luck Next Time! 😞
+            {% endif %}
+        </h2>
+    </div>
 
     <div class="progress-bar">
-        <div class="progress-bar-inner" style="width: {{ (score / total_questions) * 100 }}%;">
+        <div class="progress-bar-inner" style="width: {{ (score /total_questions) * 100 }}%;">
             {{ (score / total_questions) * 100 }}%
         </div>
     </div>
@@ -59,6 +43,7 @@
             </li>
         {% endfor %}
     </ul>
+
     <div class="button-container">
         <!-- Add the Retake Quiz button -->
         <a href="{{ url_for('quiz') }}" class="btn btn-primary">Retake Quiz</a>
@@ -67,4 +52,3 @@
     </div>
 </body>
 </html>
-

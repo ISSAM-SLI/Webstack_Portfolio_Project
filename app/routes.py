@@ -3,8 +3,9 @@ import random
 from questions import fetch_questions
 from flask_login import login_required, current_user
 from flask import request, redirect, url_for, session, render_template
-from datetime import datetime
+from datetime import datetime, timezone
 from app.models import QuizResult
+
 CATEGORY_MAP = {
     'General Knowledge': '9',
     'Computer': '18',
@@ -33,7 +34,8 @@ def home():
 @login_required
 def quiz():
     """
-    Route to display category selection first and then proceed to the quiz.
+    Quiz route: Displays one question at a time and processes user answers.
+
     """ 
     # Category selection step
     if 'questions' not in session or session['questions'] is None: 
@@ -111,7 +113,6 @@ def quiz():
         category=session.get('category', ''),
         difficulty=session.get('difficulty', '')
     )
-
 @app.route('/submit_quiz', methods=['GET', 'POST'])
 @login_required
 def submit_quiz():
@@ -125,12 +126,24 @@ def submit_quiz():
     **Responses:**
     - Saves the score and redirects to the results page.
     """
-    score = session['score']
-    new_result = QuizResult(score=score, user_id=current_user.id, date_taken=datetime.utcnow())
+    score = session.get('score', 0)
+    new_result = QuizResult(score=score, user_id=current_user.id, date_taken=datetime.now(timezone.utc))
+    print(f"Saved QuizResult: {new_result}")
     db.session.add(new_result)
     db.session.commit()
 
-    return redirect(url_for('result', score=score))
+    # Save the score temporarily for displaying the result
+    session['last_score'] = score
+    session['last_feedback'] = session.get('feedback', [])
+    session['last_total_questions'] = len(session.get('questions', []))
+
+    # Clear the session to reset quiz data
+    session.pop('questions', None)
+    session.pop('score', None)
+    session.pop('feedback', None)
+    session.pop('question_index', None)
+    return redirect(url_for('result'))
+
 
 @app.route('/result')
 @login_required
@@ -144,14 +157,12 @@ def result():
 
     **Responses:**
     - Renders the result page with:
-        - Final score
-        - Total questions
-        - Feedback on each answered question.
+      - Final score
+      - Total questions
+      - Feedback on each answered question.
     """
-    score = session.get('score', 0)
-    total_questions = len(session['questions'])
-    feedback = session.get('feedback', [])
-    session.clear()
-    session['_user_id'] = current_user.id
-
+    score = session.get('last_score', 0)
+    total_questions = session.get('last_total_questions', 0)
+    feedback = session.get('last_feedback', [])
+    
     return render_template('result.html', score=score, total_questions=total_questions, feedback=feedback)

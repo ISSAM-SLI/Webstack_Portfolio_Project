@@ -2,6 +2,16 @@
 
 Welcome to the Interactive Quiz Application! 🎉 This app is designed to provide users with a fun and engaging quiz experience while learning new facts. Whether you're quizzing yourself or challenging your friends, this app has everything you need to test your knowledge.
 
+## Table of Contents
+1. [Features](#features)
+2. [Technology Stack](#technology-stack)
+3. [Getting Started](#getting-started)
+4. [Usage](#usage)
+5. [Screenshots](#screenshots)
+6. [Future Enhancements](#future-enhancements)
+7. [License](#license)
+8. [Contributing](#contributing)
+
 ## Features
 
 - **User Authentication**: Secure login and registration system that saves your progress.

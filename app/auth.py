@@ -2,7 +2,9 @@ from flask import Blueprint, render_template, redirect, url_for, request
 from flask_login import login_user, login_required, logout_user, current_user
 from .models import User
 from werkzeug.security import generate_password_hash, check_password_hash
+from email_validator import validate_email, EmailNotValidError 
 from app import db
+import re
 
 # Blueprint for authentication routes
 bp = Blueprint('auth', __name__, url_prefix='/auth')
@@ -66,6 +68,15 @@ def register():
         username = request.form['username']
         password = request.form['password']
         email = request.form['email']
+
+         # Validate password complexity (e.g., length, special characters)
+        if len(password) < 8 or not re.search(r"\d", password) or not re.search(r"[A-Za-z]", password):
+            return render_template('register.html', error="Password must be at least 8 characters, including both letters and numbers.")
+
+        try:
+            validate_email(email)  # Will raise an exception if invalid
+        except EmailNotValidError as e:
+            return render_template('register.html', error="Please provide a valid email address.")
 
         # Check if username or email already exists
         if User.query.filter_by(username=username).first():

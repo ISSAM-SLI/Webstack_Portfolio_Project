@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:,">
     <link rel="stylesheet" href="{{ url_for('static', filename='q-settings.css') }}"> 
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <title>Quiz Settings</title>
@@ -19,11 +20,14 @@
                 </div>
             </div>
             <div class="q-op">
-                <button onclick="add_question(5)">+5</button><button onclick="add_question(10)">+10</button><button onclick="add_question(15)">+15</button><button onclick="add_question(20)">+20</button>
+                <button type="button" onclick="add_question(5)">+5</button>
+                <button type="button" onclick="add_question(10)">+10</button>
+                <button type="button" onclick="add_question(15)">+15</button>
+                <button type="button" onclick="add_question(20)">+20</button>
             </div>
         </div>
         <select id="category" name="category" required>
-            <option value="" disabled selected>Select Level Category </option>
+            <option value="" disabled selected>Select Level Category</option>
             <option value="General Knowledge">General Knowledge</option>
             <option value="Computer">Computers</option>
             <option value="Mathematics">Mathematics</option>
@@ -40,5 +44,19 @@
         </select>
         <button type="submit">Start Quiz</button>
     </form>
+    <script>
+        // JavaScript function to update the 'amount' input field with the selected value
+        function add_question(value) {
+            var amountInput = document.getElementById('amount'); // Get the amount input field
+            var currentValue = parseInt(amountInput.value, 10); // Get the current value from the input field
+
+            if (isNaN(currentValue)) {  // If the current value is not a valid number
+                currentValue = 0;  // Set it to 0
+            }
+
+            // Add the value (5, 10, 15, or 20) to the current value
+            amountInput.value = currentValue + value;
+        }
+    </script>
 </body>
 </html>
