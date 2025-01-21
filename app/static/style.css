@@ -56,6 +56,9 @@ nav .nav-button {
 .nav-login:hover {
     background-color: #CAC5D3;
 }
+.nav-signup:hover {
+    background-color: #CAC5D3;
+}
 .content {
     padding: 30px 40px 30px;
     display: grid;
@@ -82,7 +85,6 @@ nav .nav-button {
 }
 .text a {
     padding: 2px 50px;
-    background-color: transparent;
     border: 1px solid black;
     text-decoration: none;
     margin: 10px 5px 5px 0;
@@ -90,6 +92,9 @@ nav .nav-button {
     color: #682794;
     cursor: pointer;
     font-weight: 600;
+}
+.content a:hover  {
+    background-color: white;
 }
 .logo {
     display: inline-block;
@@ -142,4 +147,41 @@ footer{
     justify-content: center;
     border-radius: 10px 10px 0 0;
 
+}
+/* Dropdown Menu */
+
+ul#nav-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 40px; /* Adjust as per nav height */
+    left: 10px;
+    background-color: #2b2e83; /* Matches navbar */
+    border-radius: 8px;
+    overflow: hidden;
+    min-height: 150px;
+}
+
+ul#nav-menu.hidden {
+    display: none;
+}
+
+ul#nav-menu li {
+    padding: 0.5rem 1rem;
+    text-align: left;
+}
+
+ul#nav-menu li a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 500;
+    display: block;
+}
+
+ul#nav-menu li a:hover {
+    background-color: #3b3e9f;
+    color: #ffcc00;
 }

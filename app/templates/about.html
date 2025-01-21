@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Quizify</title>
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='about.css') }}">
+</head>
+<body>
+    <!-- Main Content -->
+    <main>
+        <!-- About the Application -->
+        <section id="about-application">
+            <h1>About Quizify</h1>
+            <p>Quizify is an interactive quiz platform built using Python and Flask. It offers a dynamic user experience where individuals can customize quizzes by selecting the number of questions, category, and difficulty level. The questions are fetched in real-time from the Open Trivia Database API, ensuring up-to-date and diverse content.</p>
+            <p>With features like form validation, progress tracking, and responsive design, Quizify delivers a seamless experience across all devices. After completing the quiz, users receive feedback to help improve their knowledge, including correct/incorrect answers and motivational insights.</p>
+            <a href="{{ url_for('home') }}">Back to Home</a>
+        </section>
+
+        <!-- About the Developers -->
+        <section id="about-developers">
+            <h2>About the Developers</h2>
+            <p>The talented developers behind Quizify are passionate about creating tools that make learning fun and accessible for everyone. Meet the team:</p>
+            <div class="developer-section">
+                <!-- Developer 1 -->
+                <div class="developer developer-right">
+                    <img src="{{ url_for('static', filename='assets/test.jpg') }}" alt="Developer 1">
+                    <div class="developer-info">
+                        <h3>Slimani Issam</h3>
+                        <p>Junior full stack developer</p>
+                        <p>"I love creating engaging and user-friendly web applications."</p>
+                    </div>
+                </div>
+
+                <!-- Developer 2 -->
+                <div class="developer">
+                    <img src="{{ url_for('static', filename='assets/test.jpg') }}" alt="Developer 2">
+                    <div class="developer-info">
+                        <h3>olaosebikan pelumi</h3>
+                        <p>Junior full stack developer</p>
+                        <p>"Passionate about building robust and scalable server-side applications."</p>
+                    </div>
+                </div>
+
+                <!-- Developer 3 -->
+                <div class="developer developer-right">
+                    <img src="{{ url_for('static', filename='assets/test.jpg') }}" alt="Developer 3">
+                    <div class="developer-info">
+                        <h3>Omofaramade Adeniji</h3>
+                        <p>Junior full stack developer</p>
+                        <p>"Focused on designing responsive and visually appealing user interfaces."</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Quizify. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>

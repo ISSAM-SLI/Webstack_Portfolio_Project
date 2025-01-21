@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='contact.css') }}">
+    <title>Contact Us</title>
+</head>
+<body>
+    <main>
+        <h1>Contact Us</h1>
+        <p>Reach out to us for any questions or feedback:</p>
+
+        <div class="email-links">
+            <a href="mailto:issam.slimani.maroc@gmail.com"><i class="fas fa-envelope"></i> Issam Slimani</a>
+            <a href="mailto:adenijifara@gmail.com"><i class="fas fa-envelope"></i> Omofaramade Adenij</a>
+            <a href="mailto:Oolaosebikan360@gmail.com"><i class="fas fa-envelope"></i> olaosebikan pelumi</a>
+        </div>
+
+        <a class="back-link" href="{{ url_for('home') }}">Back to Home</a>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Quizify. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>

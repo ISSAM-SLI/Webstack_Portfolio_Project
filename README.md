@@ -1,6 +1,6 @@
 # Interactive Quiz Application
 
-Welcome to the Interactive Quiz Application! 🎉 This app is designed to provide users with a fun and engaging quiz experience while learning new facts. Whether you're quizzing yourself or challenging your friends, this app has everything you need to test your knowledge.
+Welcome to the Interactive Quiz Application! 🎉 An engaging, customizable quiz platform built with Flask, HTML, CSS, and JavaScript. Users can select categories, difficulties, and the number of questions to test their knowledge while being timed on each question.
 
 ## Table of Contents
 1. [Features](#features)
@@ -15,10 +15,11 @@ Welcome to the Interactive Quiz Application! 🎉 This app is designed to provid
 ## Features
 
 - **User Authentication**: Secure login and registration system that saves your progress.
-- **Dynamic Quiz Questions**: Get random trivia questions and challenge yourself with each quiz attempt.
+- **Customizable Quiz Settings**: Choose from various categories, difficulties, and question amounts.
 - **Timer**: Race against the clock with a countdown timer for each question.
-- **Scoring System**: Get instant feedback on your performance with scores displayed at the end of the quiz.
-- **Responsive Design**: Enjoy the quiz on any device—desktop, tablet, or mobile.
+- **Scoring System**: Get feedback on your performance with scores displayed at the end of the quiz.
+- **Responsive Design**: Enjoy the quiz on your device—desktop.
+- **API Integration**: Questions are fetched dynamically from the [Open Trivia DB API](https://opentdb.com/).
 
 ## Technology Stack
 
@@ -27,6 +28,7 @@ Welcome to the Interactive Quiz Application! 🎉 This app is designed to provid
 - **Flask-Login**: Handles user authentication and session management.
 - **HTML/CSS**: Structure and style the front-end interface.
 - **SQLite**: A lightweight relational database to store user details, quiz questions, and scores.
+- **JavaScript**: Handles dynamic quiz features, including real-time countdowns and responsive multiple-choice questions.
 
 ## Project Breakdown
 
@@ -34,15 +36,14 @@ This project has been broken down into manageable tasks to ensure a smooth and o
 
 1. **Initial Setup**: Setting up the project folder, Git, and dependencies.
 2. **User Authentication**: Implementing the login and sign-up system for secure access.
-3. **Database Design**: Structuring the database to store user information, quiz results, and scores.
-4. **Quiz Question Integration**: Fetching quiz questions either statically or via an external API.
+3. **Database Design**: Structuring the database to store user information, and scores.
+4. **Quiz Question Integration**: Fetching quiz questions dynamically via an external API.
 5. **Timer Logic**: Implementing a countdown timer for each question.
-6. **Scoring & Feedback**: Calculating and displaying the score after each quiz attempt.
+6. **Scoring & Feedback**: Calculating and displaying the score at the end of the quiz.
 7. **Responsive Design**: Ensuring the quiz app works seamlessly on all devices.
-8. **Result Page**: A page where users can view their scores and review their answers.
-9. **Optional API**: Exposing quiz questions via a RESTful API for future scalability.
-10. **Testing & Debugging**: Ensuring all components work smoothly and fixing bugs.
-11. **Documentation & Deployment**: Writing documentation and deploying the app for public use.
+8. **Result Page**: A page where users can view their scores, feedback and review their answers.
+9. **Testing & Debugging**: Ensuring all components work smoothly and fixing bugs.
+10. **Documentation & Deployment**: Writing documentation and deploying the app for public use.
 
 ## Getting Started
 
@@ -51,48 +52,72 @@ This project has been broken down into manageable tasks to ensure a smooth and o
 1. **Python 3.x** - You need to have Python installed on your system.
 2. **Flask** - The web framework used to build this app.
 3. **SQLite** - Database engine to store user data and quiz results.
+4. **Virtual environment** - A virtual environment manager like `venv` or `virtualenv`
+5. **Dependies** - Dependencies listed in `requirements.txt`
 
 ### Installation
 
-1. Clone the repository:
+1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/yourusername/interactive-quiz-app.git
-   cd interactive-quiz-app
+   git clone https://github.com/ISSAM-SLI/Webstack_Portfolio_Project.git
+   cd Webstack_Portfolio_Project
    ```
 
-2. Set up a virtual environment:
+2. **Set up a virtual environment:**
 
    ```bash
    python3 -m venv venv
    source venv/bin/activate  # For Windows, use venv\Scripts\activate
    ```
 
-3. Install dependencies:
+3. **Install dependencies:**
 
    ```bash
    pip install -r requirements.txt
    ```
 
-4. Create the database:
+4. **Set up environment variables**
+The app requires two environment variables to run:
 
-   Run the following command to initialize the database:
+**SECRET_KEY:** Used to secure the sessions and prevent tampering.
 
-   ```bash
-   flask shell
-   ```
+**DATABASE_URI:** The URI for connecting to your database.
 
-   Inside the shell, run:
+You can set these environment variables in one of the following ways:
 
-   ```python
-   from app import db
-   db.create_all()  # Creates tables for users and quiz data
-   ```
+**Option 1:** Using .env file (recommended for development)
+
+Create a .env file in the root of the project directory and add the following lines:
+```
+SECRET_KEY=your_secret_key_here
+DATABASE_URI=your_database_uri_here
+```
+Make sure to replace **your_secret_key_here** with a random string (you can generate one using secrets.token_hex(16)) and **your_database_uri_here** with **the URI for your database**.Otherwise, The default **DATABASE_URI** is set to use an SQLite database **sqlite:///quizapp.db**
+
+**Option 2:** Manually setting environment variables
+You can manually set the environment variables in your terminal session before running the app. For example:
+
+On Linux/macOS:
+```
+export SECRET_KEY=your_secret_key_here # For Windows, use set SECRET_KEY=your_secret_key_here
+export DATABASE_URI=your_database_uri_here # For Windows, use set DATABASE_URI=your_database_uri_here
+```
+
+**Additional Notes:**
+
+**Generating a secret key:** To generate a random secret key, you can use Python’s secrets module:
+
+```
+import secrets
+print(secrets.token_hex(16))
+```
+**Database setup:** The default **DATABASE_URI** is set to use an SQLite database **(sqlite:///quizapp.db)**. If you need to use a different database, such as PostgreSQL or MySQL, you can update the **DATABASE_URI** in the .env file or set it as an environment variable accordingly.
 
 5. Run the app:
 
    ```bash
-   flask run
+   python3 run
    ```
 
    Visit `http://127.0.0.1:5000/` in your browser to start the quiz!
@@ -106,10 +131,10 @@ This project has been broken down into manageable tasks to ensure a smooth and o
 
 ## Screenshots
 
-![Home Page](https://via.placeholder.com/800x400?text=Home+Page)
+![Home Page](./app/static/assets/home-page.png)
 *Home page of the app.*
 
-![Quiz Page](https://via.placeholder.com/800x400?text=Quiz+Page)
+![Quiz Page](./app/static/assets/quiz-page.png) 
 *Quiz interface with timer and questions.*
 
 ## Future Enhancements

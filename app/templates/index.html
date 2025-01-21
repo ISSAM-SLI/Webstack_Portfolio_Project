@@ -5,22 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quizify - Welcome</title>
     <link rel="icon" href="data:,">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
 </head>
 <body>
 <section class="landing">
     <nav>
-        <div>
-            <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" viewBox="0 0 24 24"><path fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 17h14M5 12h14M5 7h14"/></svg>
-        </div>
-        <!-- <div>
-            <ul>
-                <li>Home</li>
-                <li>About</li>
-                <li>Contact</li>
+        <div class="menu-container">
+            <svg class="hamburger" onclick="toggleMenu()" xmlns="http://www.w3.org/2000/svg" width="27" height="27" viewBox="0 0 24 24">
+                <path fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 17h14M5 12h14M5 7h14" />
+            </svg>
+            <ul id="nav-menu" class="hidden">
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('about') }}">About</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
             </ul>
-        </div> -->
+        </div>
         <div class="logo"></div>
         <div class="nav-button">
             <a href="{{ url_for('auth.login') }}" class="nav-login">Login</a>
@@ -69,7 +70,13 @@
     </div>
 </main>
 <footer>
-    <p>&copy; 2025 Interactive Quiz Application. All Rights Reserved.</p>
+    <p>&copy; 2025 Quizify. All Rights Reserved.</p>
 </footer>
+<script>
+    function toggleMenu() {
+        const menu = document.getElementById('nav-menu');
+        menu.classList.toggle('hidden');
+    }
+</script>
 </body>
 </html>
