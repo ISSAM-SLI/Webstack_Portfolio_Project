@@ -1,2 +1,3 @@
 prod/
 __pycache__/
+.env
