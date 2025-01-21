@@ -86,7 +86,7 @@ The app requires two environment variables to run:
 
 You can set these environment variables in one of the following ways:
 
-**Option 1:** Using .env file (recommended for development)
+**Option 1:** Using **.env file** (recommended for development)
 
 Create a .env file in the root of the project directory and add the following lines:
 ```

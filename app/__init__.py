@@ -1,15 +1,14 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
-
+import os
 # Initialize Flask app
 app = Flask(__name__)
-app.secret_key = 'd28ebc859848fe4f6b9154bffefdc230'
 
 # Configure the database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///quizapp.db'
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'default_secret_key')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI', 'sqlite:///quizapp.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
 # Initialize the database
 db = SQLAlchemy(app)
 
