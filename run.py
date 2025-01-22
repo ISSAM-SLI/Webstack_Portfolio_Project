@@ -2,7 +2,12 @@ from app import app
 
 if __name__ == '__main__':
     """
-    Entry point for running the Flask application.
+    Run the Flask application.
+
+    This script starts the Flask application in debug mode.
+
+    Usage:
+    python run.py
 
     When this script is executed directly, the Flask application will run
     in debug mode. Debug mode is enabled for development, providing detailed 
