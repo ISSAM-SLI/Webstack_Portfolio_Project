@@ -110,4 +110,4 @@ def logout():
     - Redirect to the login page after successfully logging out.
     """
     logout_user()  # Logging out the current user
-    return redirect(url_for('auth.login'))  # Redirecting to login page after logout
+    return redirect(url_for('auth.login'))  # This will Redirecting to login page after logout
