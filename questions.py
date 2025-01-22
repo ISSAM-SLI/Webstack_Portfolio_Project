@@ -18,9 +18,9 @@ def fetch_questions(amount=5, category=None, difficulty=None):
         "type": "multiple"  # Requesting multiple-choice questions
     }
     if category:
-        params["category"] = category  # Adding category filter if specified
+        params["category"] = category  #Adding category filter if specified
     if difficulty:
-        params["difficulty"] = difficulty  # Adding difficulty filter if specified
+        params["difficulty"] = difficulty  #Adding difficulty filter if specified
     response = requests.get(base_url, params=params)
     if response.status_code == 200:  # Checking if the response is successful
         data = response.json()  # this is a dictionary Parsing response as JSON
