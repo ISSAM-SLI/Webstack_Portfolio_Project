@@ -31,16 +31,26 @@ def home():
         return render_template('index.html')
 @app.route('/about')
 def about():
+    """About route: Displays information about the Quiz App"""
     return render_template('about.html')
 
 @app.route('/contact')
 def contact():
+    """Contact route: Displays the contact form"""
     return render_template('contact.html')
 @app.route('/quiz', methods=['GET', 'POST'])
 @login_required
 def quiz():
     """
     Quiz route: Displays one question at a time and processes user answers.
+
+    **Methods:** GET, POST
+
+    **Endpoint:** /quiz
+
+    **Responses:**
+    - Renders the quiz page with the current question and options.
+    - Redirects to the result page if all questions have been answered.
 
     """ 
     # Category selection step
@@ -83,7 +93,7 @@ def quiz():
         question = questions[question_index]
         answers = question['incorrect_answers'] + [question['correct_answer']]
         random.shuffle(answers)
-    # Handle form submission (user answering the question)
+    # this is the form submission (user answering the question)
     elif request.method == 'POST':
         question_index = session['question_index'] 
         question = questions[question_index]
@@ -100,14 +110,14 @@ def quiz():
         else:
             feedback = f"Incorrect. The correct answer is: {correct_answer}"
 
-        # Store feedback for each question
+        # Store feedback for each question in the session
         session['feedback'].append({
             'question': question['question'],
             'selected_answer': selected_answer,
             'feedback': feedback
         })
-        session['question_index'] += 1 # Move to the next question
-        return redirect(url_for('quiz'))  # Redirect to show the next question
+        session['question_index'] += 1 # Move to the next question in the session
+        return redirect(url_for('quiz'))  # Redirect to show the next question in the session
 
     return render_template(
         'quiz.html',

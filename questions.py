@@ -11,7 +11,7 @@ def fetch_questions(amount=5, category=None, difficulty=None):
         difficulty (str, optional): Difficulty level of questions ('easy', 'medium', 'hard').
 
     Returns:
-        list: A list of questions if the API call is successful, otherwise an empty list.
+        list: A list of dictionaries representing the fetched questions.
     """
     base_url = "https://opentdb.com/api.php"
     params = {
@@ -24,7 +24,7 @@ def fetch_questions(amount=5, category=None, difficulty=None):
         params["difficulty"] = difficulty  # Adding difficulty filter if specified
     response = requests.get(base_url, params=params)
     if response.status_code == 200:  # Checking if the response is successful
-        data = response.json()  # Parsing response as JSON
+        data = response.json()  # this is a dictionary Parsing response as JSON
         print('Data', data)
         if data["response_code"] == 0:
             for question in data["results"]:
