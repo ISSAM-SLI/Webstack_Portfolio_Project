@@ -69,16 +69,16 @@ def register():
         password = request.form['password']
         email = request.form['email']
 
-         # Validate password complexity (e.g., length, special characters)
+         #This line will Validate password complexity (check for numbers- length, special characters)
         if len(password) < 8 or not re.search(r"\d", password) or not re.search(r"[A-Za-z]", password):
             return render_template('register.html', error="Password must be at least 8 characters, including both letters and numbers.")
 
         try:
-            validate_email(email)  # Will raise an exception if invalid
+            validate_email(email)  # This Will raise an exception if invalid email
         except EmailNotValidError as e:
             return render_template('register.html', error="Please provide a valid email address.")
 
-        # Check if username or email already exists
+        #  This will Check if username or email already exists in the database
         if User.query.filter_by(username=username).first():
             return render_template('register.html', error="Username already exists. Please choose a different one.")
         if User.query.filter_by(email=email).first():
