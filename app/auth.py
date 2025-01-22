@@ -28,12 +28,14 @@ def login():
         - Redirect to the quiz page if login is successful.
         - Render the login page with an error message if credentials are invalid.
     """
+
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
         user = User.query.filter_by(username=username).first()
 
         if user:
+            """ This will check if the password is correct"""
             if check_password_hash(user.password, password):
                 login_user(user)
                 return redirect(url_for('quiz'))
