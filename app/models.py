@@ -6,6 +6,7 @@ class User(UserMixin, db.Model):
     User model representing a user in the quiz application.
     
     Attributes:
+        __tablename__ (str): The name of the table in the database.
         id (int): The unique identifier for the user.
         username (str): The user's unique username.
         password (str): The user's password.
@@ -52,5 +53,6 @@ class QuizResult(db.Model):
         
         Returns:
             str: Representation showing the score and associated user ID.
+            
         """
         return f"<QuizResult {self.score} for User {self.user_id}>"

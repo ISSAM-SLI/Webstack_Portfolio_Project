@@ -4,7 +4,6 @@ import html
 def fetch_questions(amount=5, category=None, difficulty=None):
     """
     Fetch questions from Open Trivia DB API.
-
     Args:
         amount (int): Number of questions to fetch. Defaults to 5.
         category (int, optional): ID of the category for questions.
