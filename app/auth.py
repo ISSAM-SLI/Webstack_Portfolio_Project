@@ -83,9 +83,11 @@ def register():
             return render_template('register.html', error="Username already exists. Please choose a different one.")
         if User.query.filter_by(email=email).first():
             return render_template('register.html', error="Email already registered. Please use a different email.")
-
+        
+        # Hashing the password to store it in the database
         hashed_password = generate_password_hash(password)
         new_user = User(username=username, password=hashed_password, email=email)
+        # Adding the new user to the database
         db.session.add(new_user)
         db.session.commit()
         return redirect(url_for('auth.login'))
