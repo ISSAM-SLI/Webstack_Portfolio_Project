@@ -117,7 +117,7 @@ print(secrets.token_hex(16))
 5. Run the app:
 
    ```bash
-   python3 run
+   python3 run.py
    ```
 
    Visit `http://127.0.0.1:5000/` in your browser to start the quiz!
